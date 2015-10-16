@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <mappers>
+        <mapper resource="goodUnit.xml"/>
+        <mapper resource="company.xml"/>
+        <mapper resource="good.xml"/>
+        <mapper resource="logis.xml"/>
+        <mapper resource="order.xml"/>
+        <mapper resource="orderGoods.xml"/>
+        <mapper resource="taxCode.xml"/>
+        <mapper resource="currency.xml"/>
+        <mapper resource="country.xml"/>
+        <mapper resource="orderSentHistory.xml"/>
+        <mapper resource="businessNoHistory.xml"/>
+        <mapper resource="mcMember.xml"/>
+        <mapper resource="sinoResultRecord.xml"/>
+        <mapper resource="address.xml"/>
+        <mapper resource="agency.xml"/>
+        <mapper resource="agencyGood.xml"/>
+        <mapper resource="zip.xml"/>
+        <mapper resource="agencyGoodPrice.xml"/>
+        <mapper resource="alipayPayInfoPushRequest.xml"/>
+        <mapper resource="alipayPayInfoPushResult.xml"/>
+        <mapper resource="repaymentPlan.xml"/>
+        <mapper resource="groupGoods.xml"/>
+        <mapper resource="repaymentApply.xml"/>
+        <mapper resource="repaymentApplyHistory.xml"/>
+        <mapper resource="sms.xml"/>
+        <mapper resource="smsTemplate.xml"/>
+        <mapper resource="areaCode.xml"/>
+        <mapper resource="fundTransactionRecord.xml"/>
+        <mapper resource="payChannelReturn.xml"/>
+        <mapper resource="inventory.xml"/>
+        <mapper resource="fisherProduct.xml"/>
+        <mapper resource="announcement.xml"/>
+        <mapper resource="priceSheet.xml"/>
+    </mappers>
+</configuration>

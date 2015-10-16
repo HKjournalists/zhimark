@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.SmsRepository">
+    <insert id="insertSms" parameterType="com.spring.mvc.model.SmsModel" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into ims_eso_sale_sms (templateId, mobileNo, content, smsCode, smsType, expiredDate, createdDate, updatedDate) values
+        (#{templateId},#{mobileNo},#{content},#{smsCode},#{smsType},#{expiredDate},#{createdDate},#{updatedDate});
+    </insert>
+
+    <select id="getLastSmsByMobileNo" parameterType="java.util.Map" resultType="com.spring.mvc.model.SmsModel">
+        select * from ims_eso_sale_sms where mobileNo=#{mobileNo} order by createdDate desc limit 1;
+    </select>
+
+    <select id="countTotalSmsTodayByMobileAndType" parameterType="java.util.Map" resultType="java.lang.Long">
+        <![CDATA[
+            select count(id) from ims_eso_sale_sms where mobileNo=#{mobileNo} and smsType=#{smsType} and createdDate<=#{endOfToday} and
+            createdDate >=#{startOfToday}
+        ]]>
+    </select>
+</mapper>

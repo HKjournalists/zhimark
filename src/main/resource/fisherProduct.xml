@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.FisherProductRepository">
+    <insert id="insertFisherProduct" parameterType="com.spring.mvc.model.ThreePartyProduct.FisherProductModel"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into ims_eso_sale_fisher_product (productId, productNo, productName, productSpec, brandId,supplierId,supplierName,taxRate,countryId,
+        countryName,marketPrice,profit,stock,boughtNum,enabledNum,exemptionPostage,exemptionServiceCharge,baseNum,basePrice,productBrief,
+        productIntroduction,createdDate,updatedDate)
+        values
+        (#{productId}, #{productNo}, #{productName}, #{productSpec}, #{brandId},#{supplierId},#{supplierName},#{taxRate},#{countryId},
+        #{countryName},#{marketPrice},#{profit},#{stock},#{boughtNum},#{enabledNum},#{exemptionPostage},#{exemptionServiceCharge},#{baseNum},#{basePrice},#{productBrief},
+        #{productIntroduction},#{createdDate},#{updatedDate});
+    </insert>
+
+    <insert id="batchInsertFisherProduct" parameterType="java.util.List"
+            useGeneratedKeys="true">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT
+            LAST_INSERT_ID();
+        </selectKey>
+        insert into ims_eso_sale_fisher_product (productId, productNo, productName, productSpec,
+        brandId,supplierId,supplierName,taxRate,countryId,
+        countryName,marketPrice,profit,stock,boughtNum,enabledNum,exemptionPostage,exemptionServiceCharge,baseNum,basePrice,productBrief,
+        productIntroduction,createdDate,updatedDate)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.productId}, #{item.productNo}, #{item.productName}, #{item.productSpec},
+            #{item.brandId},#{item.supplierId},#{item.supplierName},#{item.taxRate},#{item.countryId},
+            #{item.countryName},#{item.marketPrice},#{item.profit},#{item.stock},#{item.boughtNum},#{item.enabledNum},#{item.exemptionPostage},
+            #{item.exemptionServiceCharge},#{item.baseNum},#{item.basePrice},#{item.productBrief},
+            #{item.productIntroduction},#{item.createdDate},#{item.updatedDate}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getFisherProductByProductId" parameterType="java.util.Map"
+            resultType="com.spring.mvc.model.ThreePartyProduct.FisherProductModel">
+        select * from ims_eso_sale_fisher_product where productId=#{productId};
+    </select>
+
+    <select id="getFisherProductsByProductIds" parameterType="java.util.List"
+            resultType="com.spring.mvc.model.ThreePartyProduct.FisherProductModel">
+        select * from ims_eso_sale_fisher_product where productId in
+        <foreach collection="list" index="index" item="productId" open="(" close=")" separator=",">
+            #{productId}
+        </foreach>
+    </select>
+
+    <select id="getAllFisherProducts" resultType="com.spring.mvc.model.ThreePartyProduct.FisherProductModel">
+        select * from ims_eso_sale_fisher_product;
+    </select>
+</mapper>

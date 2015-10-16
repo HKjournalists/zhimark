@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.OrderRepository">
+    <select id="getByOrderNo" parameterType="java.util.Map" resultType="com.spring.mvc.model.OrderModel">
+        select * from ims_eso_sale_order where ordersn=#{orderNo};
+    </select>
+
+    <select id="getById" parameterType="int" resultType="com.spring.mvc.model.OrderModel">
+        select * from ims_eso_sale_order where id=#{id};
+    </select>
+
+    <update id="updateOrderStatus" parameterType="java.util.Map">
+        update ims_eso_sale_order set status=#{status} where ordersn=#{orderNo};
+    </update>
+
+    <update id="updateOrderBillWays" parameterType="java.util.Map">
+        update ims_eso_sale_order set logisBillNo=#{billWays} where ordersn=#{orderNo};
+    </update>
+
+    <select id="getAllOrdersUnsentSinoTrans" parameterType="java.util.Map" resultType="com.spring.mvc.model.OrderModel">
+        select * from ims_eso_sale_order where status=#{status};
+    </select>
+    <select id="getAllUnpaidOrders" parameterType="java.util.Map" resultType="com.spring.mvc.model.OrderModel">
+        select * from ims_eso_sale_order where status=#{status};
+    </select>
+
+    <update id="updateOrderByMap" parameterType="java.util.Map">
+        update ims_eso_sale_order set ordersn=#{orderNo}
+        <if test="orderNo!=null">
+            <![CDATA[ ,ddh=#{orderNo}]]>
+        </if>
+        <if test="tradeNo!=null">
+            <![CDATA[ ,jyh=#{tradeNo}]]>
+        </if>
+        <if test="payType!=null">
+            <![CDATA[ ,paytype=#{payType}]]>
+        </if>
+        <if test="status!=null">
+            <![CDATA[ ,status=#{status}]]>
+        </if>
+        <if test="remark!=null">
+            <![CDATA[ ,remark=#{remark}]]>
+        </if>
+        where id=#{id};
+    </update>
+</mapper>

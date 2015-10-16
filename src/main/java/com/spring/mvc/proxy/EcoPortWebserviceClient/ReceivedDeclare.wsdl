@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://impl.ws.newyork.zjport.gov.cn/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://ws.newyork.zjport.gov.cn/" name="ReceivedDeclareServiceImplService" targetNamespace="http://impl.ws.newyork.zjport.gov.cn/">
+  <wsdl:import location="http://122.224.230.4:18003/newyorkWS/ws/ReceivedDeclare?wsdl=ReceivedDeclareService.wsdl" namespace="http://ws.newyork.zjport.gov.cn/"></wsdl:import>
+  <wsdl:binding name="ReceivedDeclareServiceImplServiceSoapBinding" type="ns1:ReceivedDeclareService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="checkReceived">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="checkReceived">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="checkReceivedResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReceivedDeclareServiceImplService">
+    <wsdl:port binding="tns:ReceivedDeclareServiceImplServiceSoapBinding" name="ReceivedDeclareServiceImplPort">
+      <soap:address location="http://122.224.230.4:18003/newyorkWS/ws/ReceivedDeclare"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

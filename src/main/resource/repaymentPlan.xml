@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.RepaymentPlanRepository">
+    <insert id="insertRepaymentPlan" parameterType="com.spring.mvc.model.RepaymentPlanModel">
+        insert into ims_eso_sale_repayment_plan (orderId,orderNo,headCorpID,subCorpID,retailerCorpID,
+        headCorpPrice,subCorpPriceFromHeadCorp,retailerPriceFromHeadCorp,retailerPrice,headCorpProfit,subCorpProfit,
+        retailerProfit,belongsToCorp,status,createdTime,updatedTime) VALUES
+        (#{orderId},#{orderNo},#{headCorpID},#{subCorpID},#{retailerCorpID},#{headCorpPrice},#{subCorpPriceFromHeadCorp},
+        #{retailerPriceFromHeadCorp},#{retailerPrice},#{headCorpProfit},#{subCorpProfit},
+        #{retailerProfit},#{belongsToCorp},#{status},#{createdTime},#{updatedTime});
+    </insert>
+
+    <select id="getRepaymentPlansByPagination" parameterType="java.util.Map"
+            resultType="com.spring.mvc.model.RepaymentPlanModel">
+        select * from ims_eso_sale_repayment_plan where 1=1
+        <if test="headCorpId!=null">
+            <![CDATA[ and headCorpId=#{headCorpId}]]>
+        </if>
+        <if test="subCorpId!=null">
+            <![CDATA[ and subCorpId=#{subCorpId}]]>
+        </if>
+        <if test="retailerCorpId!=null">
+            <![CDATA[ and retailerCorpId=#{retailerCorpId}]]>
+        </if>
+        <if test="status!=null">
+            <![CDATA[ and status=#{status}]]>
+        </if>
+        <if test="startTime!=null">
+            <![CDATA[ and createdTime>=#{startTime}]]>
+        </if>
+        <if test="endTime!=null">
+            <![CDATA[ and createdTime<=#{endTime}]]>
+        </if>
+        order by createdTime desc
+        limit #{startIndex},#{offset};
+    </select>
+
+    <select id="getAllRepaymentPlans" parameterType="java.util.Map"
+            resultType="com.spring.mvc.model.RepaymentPlanModel">
+        select * from ims_eso_sale_repayment_plan where 1=1
+        <if test="headCorpId!=null">
+            <![CDATA[ and headCorpId=#{headCorpId}]]>
+        </if>
+        <if test="subCorpId!=null">
+            <![CDATA[ and subCorpId=#{subCorpId}]]>
+        </if>
+        <if test="retailerCorpId!=null">
+            <![CDATA[ and retailerCorpId=#{retailerCorpId}]]>
+        </if>
+        <if test="status!=null">
+            <![CDATA[ and status=#{status}]]>
+        </if>
+        <if test="startTime!=null">
+            <![CDATA[ and createdTime>=#{startTime}]]>
+        </if>
+        <if test="endTime!=null">
+            <![CDATA[ and createdTime<=#{endTime}]]>
+        </if>
+        order by createdTime desc
+    </select>
+
+    <select id="countAllRepaymentPlansByRules" parameterType="java.util.Map" resultType="java.lang.Long">
+        select count(id) from ims_eso_sale_repayment_plan where 1=1
+        <if test="headCorpId!=null">
+            <![CDATA[ and headCorpId=#{headCorpId}]]>
+        </if>
+        <if test="subCorpId!=null">
+            <![CDATA[ and subCorpId=#{subCorpId}]]>
+        </if>
+        <if test="retailerCorpId!=null">
+            <![CDATA[ and retailerCorpId=#{retailerCorpId}]]>
+        </if>
+        <if test="status!=null">
+            <![CDATA[ and status=#{status}]]>
+        </if>
+        <if test="startTime!=null">
+            <![CDATA[ and createdTime>=#{startTime}]]>
+        </if>
+        <if test="endTime!=null">
+            <![CDATA[ and createdTime<=#{endTime}]]>
+        </if>
+        order by createdTime desc
+    </select>
+
+    <select id="getAllProfitBriefByStatus" parameterType="java.util.Map" resultType="java.lang.Double">
+        select
+        <if test="subCorpId==null and retailerCorpId==null">
+            <![CDATA[ sum(subCorpProfit+retailerProfit)]]>
+        </if>
+
+        <if test="subCorpId!=null and retailerCorpId==null">
+            <![CDATA[ sum(subCorpProfit)]]>
+        </if>
+
+        <if test="retailerCorpId!=null">
+            <![CDATA[ sum(retailerProfit)]]>
+        </if>
+
+        from ims_eso_sale_repayment_plan where 1=1
+        <if test="headCorpId!=null">
+            <![CDATA[ and headCorpId=#{headCorpId}]]>
+        </if>
+        <if test="subCorpId!=null">
+            <![CDATA[ and subCorpId=#{subCorpId}]]>
+        </if>
+        <if test="retailerCorpId!=null">
+            <![CDATA[ and retailerCorpId=#{retailerCorpId}]]>
+        </if>
+        <if test="status!=null">
+            <![CDATA[ and status=#{status}]]>
+        </if>
+        <if test="startTime!=null">
+            <![CDATA[ and createdTime>=#{startTime}]]>
+        </if>
+        <if test="endTime!=null">
+            <![CDATA[ and createdTime<=#{endTime}]]>
+        </if>
+    </select>
+
+    <select id="countAllWaitingRepaymentPlans" parameterType="java.util.Map" resultType="java.lang.Long">
+        select count(id) from ims_eso_sale_repayment_plan where status=#{status} order by createdTime desc;
+    </select>
+
+    <update id="updateRepaymentPlanById" parameterType="java.util.Map">
+        update ims_eso_sale_repayment_plan set status=#{status},updatedTime=#{updatedTime} where id=#{id};
+    </update>
+
+    <update id="updateRepaymentPlanApplyNoById" parameterType="java.util.Map">
+        update ims_eso_sale_repayment_plan set applyId=#{applyId},status=#{status},updatedTime=#{updatedTime} where id=#{id};
+    </update>
+
+    <select id="queryAppliedRepaymentPlansPagination" parameterType="java.util.Map"
+            resultType="com.spring.mvc.model.RepaymentPlanModel">
+        select * from ims_eso_sale_repayment_plan where applyId=#{applyId} order by createdTime desc limit #{startIndex},#{offset};;
+    </select>
+
+    <select id="countAppliedRepaymentPlans" parameterType="java.util.Map" resultType="java.lang.Long">
+        select count(id) from ims_eso_sale_repayment_plan where applyId=#{applyId};
+    </select>
+
+    <update id="updateRepaymentPlansStatusByApplyId" parameterType="java.util.Map">
+        update ims_eso_sale_repayment_plan set status=#{status} where applyId=#{applyId};
+    </update>
+
+    <select id="getRepaymentPlansWithinIds" parameterType="java.util.Map" resultType="com.spring.mvc.model.RepaymentPlanModel">
+        select * from ims_eso_sale_repayment_plan where 1=1
+        <if test="repaymentPlanIds.size() > 0">
+            and id in
+            <foreach
+                    collection="repaymentPlanIds"
+                    item="repaymentPlanId"
+                    open="("
+                    separator=","
+                    close=")">
+                #{repaymentPlanId}
+            </foreach>
+        </if>
+        order by createdTime desc;
+    </select>
+
+    <select id="getSubCorpRepaymentAmountByConditions" parameterType="java.util.Map" resultType="java.lang.Double">
+        select sum(subCorpProfit) from ims_eso_sale_repayment_plan where 1=1
+        <if test="headCorpId!=null">
+            <![CDATA[ and headCorpId=#{headCorpId}]]>
+        </if>
+        <if test="subCorpId!=null">
+            <![CDATA[ and subCorpId=#{subCorpId}]]>
+        </if>
+        <if test="retailerCorpId!=null">
+            <![CDATA[ and retailerCorpId=#{retailerCorpId}]]>
+        </if>
+        <if test="status!=null">
+            <![CDATA[ and status=#{status}]]>
+        </if>
+        <if test="startTime!=null">
+            <![CDATA[ and createdTime>=#{startTime}]]>
+        </if>
+        <if test="endTime!=null">
+            <![CDATA[ and createdTime<=#{endTime}]]>
+        </if>
+    </select>
+
+    <select id="getRepaymentPlansByOrderNo" parameterType="java.util.Map" resultType="com.spring.mvc.model.RepaymentPlanModel">
+        select * from ims_eso_sale_repayment_plan where orderNo=#{orderNo};
+    </select>
+</mapper>

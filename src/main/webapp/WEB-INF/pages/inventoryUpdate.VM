@@ -1,0 +1,20 @@
+
+<div>
+    <label class="productId" productId="1">喜宝</label>
+    <input type="text" class="haiWaiGouAmount" value="6"/>
+    <input type="text" class="fisherAmount" value="6"/>
+</div>
+
+<div>
+    <label class="productId" productId="2">爱他美</label>
+    <input type="text" class="haiWaiGouAmount" value="5"/>
+    <input type="text" class="fisherAmount" value="5"/>
+</div>
+
+<div>
+    <label class="productId" productId="3">牛栏</label>
+    <input type="text" class="haiWaiGouAmount" value="4"/>
+    <input type="text" class="fisherAmount" value="4"/>
+</div>
+
+<input type="button" class="update" value="更新" style="height: 50px;width: 60px;"/>

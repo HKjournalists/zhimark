@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.InventoryRepository">
+    <insert id="insertInventory" parameterType="com.spring.mvc.model.InventoryModel" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into ims_eso_sale_inventory (productId, haiWaiGouAmount, fisherAmount, createdDate, updatedDate) values
+        (#{productId},#{haiWaiGouAmount},#{fisherAmount},#{createdDate},#{updatedDate});
+    </insert>
+
+    <select id="getInventoryByInnerProductId" parameterType="java.util.Map"
+            resultType="com.spring.mvc.model.InventoryModel">
+        select * from ims_eso_sale_inventory where innerProductId=#{innerProductId};
+    </select>
+</mapper>

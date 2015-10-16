@@ -1,0 +1,237 @@
+{template 'headergs'}
+{template 'common'}
+<script type="text/javascript" src="resource/js/lib/jquery-1.7.2.js"></script>
+<!--<script type="text/javascript" src="resource/js/lib/jquery-ui-1.10.3.min.js"></script>-->
+<script type="text/javascript" src="resource/js/lib/trimpath-template.js"></script>
+<script type="text/javascript" src="resource/js/repayment-apply-order.js"></script>
+<script type="text/javascript" src="resource/js/lib/date.js"></script>
+<script type="text/javascript" src="resource/js/lib/pagination.js"></script>
+<link href="resource/css/skin.css" rel="stylesheet">
+
+{if $operation == 'displayyjdd'}
+<style>
+    .nochoice {
+        float: left;
+        border: 1px solid #ddd;
+        padding: 4px 30px;
+    }
+
+    .nochoiceBack {
+        float: left;
+        border: 1px solid #ddd;
+        padding: 4px 30px;
+        background-color: gray;
+        color: #fff;
+    }
+
+    .selected-th{
+        background-color: #ee494d !important;
+    }
+
+    a.clear-a{
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    a.clear-a:hover{
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    a.clear-a:focus{
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .red-color{
+        color: #E63F00 !important;
+    }
+
+</style>
+<input type="hidden" id="apply-param" class="apply-param" value="{$_SERVER['QUERY_STRING']}"/>
+<div class="col-md-10 col-lg-10">
+    <div class="main">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a class="repayment-pay"
+                           href="javascript:void(0);">佣金订单</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-body">
+
+                <!--<div class="form-group">-->
+                    <!--{if $_SESSION['vip']==1}-->
+                    <!--<label class="col-sm-2 col-md-2 control-label">分公司</label>-->
+
+                    <!--<div class="col-md-3 col-sm-3">-->
+
+                        <!--<select class="form-control subCorpSelect" style="margin-right:15px;" name="fgsname"-->
+                                <!--onchange="fetchChildCategory2(this.options[this.selectedIndex].value)">-->
+                            <!--<option value="0">请选择分公司</option>-->
+                            <!--{loop $fgs $fgs}-->
+                            <!--{if $fgs['vip'] == 2}-->
+                            <!--<option value="{$fgs['id']}" {if $fgs['id'] == $_GPC['fgsname']} selected="selected"{/if}>{$fgs['name']}</option>-->
+                            <!--{/if}-->
+                            <!--{/loop}-->
+                            <!--<option value="1" {if $_GPC['fgsname']==1} selected="selected"{/if}>总公司</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<input type="hidden" class="headCorpId" name="headCorpId" value="{$_SESSION['vipid']}"/>-->
+                    <!--{/if}-->
+                    <!--{if $sjxs}-->
+                    <!--<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">经销商</label>-->
+
+                    <!--<div class="col-xs-6 col-sm-4">-->
+                        <!--<select class="form-control input-medium retailerCorpSelect" id="jxsname" name="jxsname">-->
+                            <!--<option value="0">请选择经销商</option>-->
+
+                            <!--{if !empty($_GPC['fgsname']) && !empty($childrenjxs[$_GPC['fgsname']])}-->
+                            <!--{loop $childrenjxs[$_GPC['fgsname']] $rowjxs}-->
+                            <!--<option value="{$rowjxs[0]}" {if $rowjxs[0]== $_GPC['jxsname']} selected="selected"{/if}>{$rowjxs[1]}</option>-->
+                            <!--{/loop}-->
+                            <!--{/if}-->
+                            <!--&lt;!&ndash;-->
+                              <!--{loop $jxs $jxs}-->
+                              <!--<option value="{$jxs['id']}">{$jxs['name']}</option>-->
+                              <!--{/loop}-->
+                              <!--&ndash;&gt;-->
+
+                        <!--</select>-->
+                        <!--<input type="hidden" class="subCorpId" name="subCorpid" value="{$_SESSION['vipid']}"/>-->
+                    <!--</div>-->
+
+
+                    <!--{/if}-->
+                    <!--<input type="hidden" class="retailerCorpId" name="vipid" value="{$_SESSION['vipid']}"/>-->
+                <!--</div>-->
+
+
+                <!--<div class="row" style="margin-top: 20px;margin-bottom: 30px;">-->
+                    <!--<div class="col-lg-offset-2 col-md-offset-2 col-md-1 col-lg-1 ">-->
+                        <!--<span style="float:right;" class="control-label">时间</span>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6 col-lg-6" id="times">-->
+                        <!--<a href="javascript:void(0);">-->
+                            <!--<div class="nochoice" time-span="7">7天内</div>-->
+                        <!--</a>-->
+                        <!--<a href="javascript:void(0);">-->
+                            <!--<div class="nochoice" time-span="14">15天内</div>-->
+                        <!--</a>-->
+                        <!--<a href="javascript:void(0);">-->
+                            <!--<div class="nochoice" time-span="30">30天内</div>-->
+                        <!--</a>-->
+                        <!--<a href="javascript:void(0);">-->
+                            <!--<div class="nochoice" time-span="all">全部</div>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class=" col-xs-2 col-sm-2 col-lg-2">-->
+                        <!--<button class="btn btn-default buttonBorder search"><i class="fa fa-search"></i> 搜索</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+
+                    <!--<table class="table  table-bordered">-->
+                        <!--<thead>-->
+                        <!--<tr class="info">-->
+                            <!--<th colspan='4'>佣金结算金额统计</th>-->
+                            <!--<th colspan='4'>佣金结算订单统计</th>-->
+
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr class="info">-->
+                            <!--<th class="plan-head" plan-status="3"><a class="clear-a" href="javascript:void(0);">已结算</a></th>-->
+                            <!--<th class="plan-head" plan-status="2"><a class="clear-a" href="javascript:void(0);">结算中</a></th>-->
+                            <!--<th class="plan-head" plan-status="0"><a class="clear-a" href="javascript:void(0);">未结算</a></th>-->
+                            <!--<th class="plan-head" plan-status="1"><a class="clear-a" href="javascript:void(0);">等待结算中</a></th>-->
+                            <!--<th class="plan-head" plan-status="3"><a class="clear-a" href="javascript:void(0);">已结算</a></th>-->
+                            <!--<th class="plan-head" plan-status="2"><a class="clear-a" href="javascript:void(0);">结算中</a></th>-->
+                            <!--<th class="plan-head" plan-status="0"><a class="clear-a" href="javascript:void(0);">未结算</a></th>-->
+                            <!--<th class="plan-head" plan-status="1"><a class="clear-a" href="javascript:void(0);">等待结算中</a></th>-->
+
+                        <!--</tr>-->
+                        <!--<tr>-->
+
+                            <!--<th class="settledAmount">{$jxsj}</th>-->
+                            <!--<th class="processingAmount">{$fgsj}</th>-->
+
+                            <!--<th class="unsettledAmount">{php echo $cje-$jxsj;}</th>-->
+                            <!--<th class="waitingAmount" amount="">{php echo $jxsj-$fgsj;}</th>-->
+
+                            <!--<th class="settledCount">{$wjsjxs}</th>-->
+                            <!--<th class="processingCount">{$jsjxs}</th>-->
+                            <!--<th class="unsettledCount">{$wjsfgs}</th>-->
+                            <!--<th class="waitingCount">{$jsfgs}</th>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</div>-->
+
+                <input type="hidden" class="selected-plan-status" name="plan-status" value=""/>
+                <input type="hidden" class="role" name="role" value="{$_SESSION['vip']}"/>
+
+                <div class="row">
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="info">
+                            <th>订单日期</th>
+                            <th>订单编号</th>
+                            {if $_SESSION['vip']==1}
+                            <th>分公司返佣金额</th>
+                            <th>经销商返佣金额</th>
+                            {/if}
+                            {if $_SESSION['vip']==2}
+                            <th>返佣金额</th>
+                            {/if}
+                            {if $_SESSION['vip']==3}
+                            <th>返佣金额</th>
+                            {/if}
+                            <th>所属</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="show_repayment_plans">
+                        <!--<tr class="show-repayment_plans">-->
+                        <!--<th>2015-6-21</th>-->
+                        <!--<th>212507177783</th>-->
+                        <!--<th style="padding:0px;">-->
+                        <!--<table class="table table-bordered innerTable">-->
+                        <!--<tr class="info">-->
+                        <!--<td style="padding:3px;">分公司</td>-->
+                        <!--<td style="padding:3px;">经销商</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                        <!--<td style="padding:3px;">100</td>-->
+                        <!--<td style="padding:3px;">50</td>-->
+                        <!--</tr>-->
+                        <!--</table>-->
+                        <!--</th>-->
+                        <!--<th>正常</th>-->
+                        <!--<th>总公司</th>-->
+                        <!--<th><a href="#" class="btn btn-link linkNoPadding">详情</a></th>-->
+                        <!--</tr>-->
+
+                        </tbody>
+                    </table>
+                </div>
+                <!--</form>-->
+                <div class="pagination"></div>
+            </div>
+        </div>
+
+        <!--<script type="text/javascript">-->
+        <!--$("#times").find("div").bind("click", function () {-->
+        <!--$("#times").find("[class='nochoiceBack']").removeClass().addClass("nochoice");-->
+        <!--$(this).removeClass().addClass("nochoiceBack");-->
+
+        <!--});-->
+        <!--</script>-->
+    </div>
+</div>
+{/if}
+{template 'footer'}

@@ -1,0 +1,68 @@
+{template 'headergs'}
+{template 'common'}
+<br><br><br><br>
+<style type='text/css'>
+
+    .header1 {
+        margin-top: -2%;
+    }
+</style>
+
+<script type="text/javascript" src="resource/js/lib/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="resource/js/lib/trimpath-template.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.getJSON("../addons/eso_sale/c/getAnnouncements.php", function (data) {
+            var mergedHtml = TrimPath.parseTemplate(announcementTemplate).process({"announcements": data});
+            $(".announcement").html(mergedHtml);
+        });
+
+        $.getJSON("../addons/eso_sale/c/getPriceSheet.php", function (data) {
+            var mergedHtml = TrimPath.parseTemplate(priceSheetsTemplate).process({"priceSheets": data});
+            $(".priceSheet").html(mergedHtml);
+        });
+    });
+    var announcementTemplate = "<ul>" +
+            "{for announcement in announcements}" +
+            "<li style='margin-bottom:10px;'>" +
+            "<div>" +
+            "<div style='float: left;width: 75%;height: 80px;'>${announcement.content}</div>" +
+            "<div style='float: left;margin-left: 50px;position: relative;text-align: center;'>${announcement.createdDate}</div>" +
+            "</div>" +
+            "</li>" +
+            "{/for}" +
+            "</ul>";
+
+    var priceSheetsTemplate = "<ul>" +
+            "{for priceSheet in priceSheets}" +
+            "<li style='margin-bottom:10px;'>" +
+            "<div>" +
+            "<div style='float: left;height: 20px;'><a href='${priceSheet.path}' target='_blank'>${priceSheet.title}</a></div>" +
+            "<div style='float: left;margin-left: 50px;position: relative;text-align: center;'>${priceSheet.createdDate}</div>" +
+            "</div>" +
+            "</li>" +
+            "{/for}" +
+            "</ul>";
+</script>
+{if $_SESSION['flag']==1}
+<div class="col-sm-10 col-md-10">
+    <div class="row" style="margin-top: -90px;">
+        <div style="margin:10px 30px 10px 30px;float: left;">
+            <div><label>公告</label></div>
+            <div class="announcement">
+
+            </div>
+        </div>
+
+        <div style="margin:10px 30px 10px 30px;float: left;">
+            <div><label>零售价参考表</label></div>
+            <div class="priceSheet">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{/if}
+</div>
+{template 'footer'}

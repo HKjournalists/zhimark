@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.AlipayPayInfoResultRepository">
+    <insert id="insertAlipayPushResult" parameterType="com.spring.mvc.model.serviceResult.alipay.AlipayPayInfoResultModel">
+        insert into ims_eso_sale_alipay_customs_result (orderNo,isSuccess,error,amount,customsPlace,alipayTradeNo,alipayDeclareNo,
+        resultCode,detailResultDescription,createTime,updateTime)
+        VALUES (#{orderNo},#{isSuccess},#{error},#{amount},#{customsPlace},#{alipayTradeNo},#{alipayDeclareNo},
+        #{resultCode},#{detailResultDescription},#{createTime},#{updateTime});
+    </insert>
+
+    <select id="getSuccessAlipayPushResultByOrderNo" parameterType="java.util.Map" resultType="com.spring.mvc.model.serviceResult.alipay.AlipayPayInfoResultModel">
+        select * from ims_eso_sale_alipay_customs_result where orderNo=#{orderNo} and isSuccess=#{isSuccess} and resultCode=#{resultCode}
+    </select>
+</mapper>

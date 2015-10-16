@@ -1,0 +1,23 @@
+<html>
+<head>
+    <script src="/static/js/lib/jquery-1.7.2.js" type="application/javascript"></script>
+    <script src="/static/js/utils/imageRecycleShow.js" type="application/javascript"></script>
+    <script>
+        $(function () {
+            imageRecycleShow.recycle("-1920px");
+        });
+    </script>
+</head>
+<body class="overHidden" ondragstart="window.event.returnValue=false" oncontextmenu="window.event.returnValue=false" onselectstart="event.returnValue=false">
+<div  class="homePage overHidden" id="pop">
+    <div class="row">
+        <!-- <img src="images/close.png" class="closeIcon" onclick="hidePop()"/>-->
+        <!-- <img src="../addons/eso_sale/template/zdj/images/videoButtom.jpg" class="img-responsive" style="margin-top:-5px;    width: 1890px;" />-->
+    </div>
+</div>
+<div>
+    <img src="/static/images/test.png" class="recycle" ></img>
+    <img src="/static/images/yiyabaobei.jpg" class="recycle"></img>
+</div>
+</body>
+</html>

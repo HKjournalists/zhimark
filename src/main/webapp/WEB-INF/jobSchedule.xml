@@ -1,0 +1,99 @@
+<!-- 配置调度程序quartz ，其中配置JobDetail有两种方式 -->
+<!--方式一：使用JobDetailBean，任务类必须实现Job接口 -->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <!--发送给中外运订单数据 -->
+    <bean id="SendOrdersToSinoChinaJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="name" value="SendOrdersToSinoChinaJob"></property>
+        <property name="jobClass">
+            <value>
+                com.spring.mvc.schedule.SendOrderInfoToSinoChinaJob
+            </value>
+        </property>
+    </bean>
+
+    <bean id="sendOrdersToSinoChinaJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="SendOrdersToSinoChinaJob"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0/5 * * * ?</value>
+        </property>
+    </bean>
+    <!--发送给电子口岸订单数据 -->
+    <bean id="SendOrderInfoToEcoPortJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="name" value="SendOrderInfoToEcoPortJob"></property>
+        <property name="jobClass">
+            <value>
+                com.spring.mvc.schedule.SendOrderInfoToEcoPortJob
+            </value>
+        </property>
+    </bean>
+
+    <bean id="sendOrderInfoToEcoPortJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="SendOrderInfoToEcoPortJob"/>
+        </property>
+        <property name="cronExpression">
+            <value>*/5 * * * * ?</value>
+        </property>
+    </bean>
+
+    <!--每日更新检查返佣计划是不是可变更为待结算-->
+    <bean id="repaymentPlanBatchJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="name" value="RepaymentPlanBatchJob"></property>
+        <property name="jobClass">
+            <value>
+                com.spring.mvc.schedule.RepaymentPlanBatchJob
+            </value>
+        </property>
+    </bean>
+
+    <bean id="repaymentPlanBatchJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="repaymentPlanBatchJob"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0 1 * * ?</value>
+            <!--<value>0 */1 * * * ?</value>-->
+        </property>
+    </bean>
+
+    <!-- 更新那些超时未支付的订单为关闭状态-->
+    <bean id="autoSetExpiredOrderClosedJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="name" value="AutoSetExpiredOrderClosedJob"></property>
+        <property name="jobClass">
+            <value>
+                com.spring.mvc.schedule.AutoSetExpiredOrderClosedJob
+            </value>
+        </property>
+    </bean>
+
+    <bean id="autoSetExpiredOrderClosedJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="autoSetExpiredOrderClosedJob"/>
+        </property>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 管理类：配置Schedule信息，与spring容器的生命周期建立联系等功能 -->
+    <bean id='scheduler' class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--<ref bean="sendOrdersToSinoChinaJobTrigger"/>-->
+                <ref bean="repaymentPlanBatchJobTrigger"/>
+                <ref bean="autoSetExpiredOrderClosedJobTrigger"/>
+                <!--<ref bean="sendOrderInfoToEcoPortJobTrigger" />-->
+            </list>
+        </property>
+        <property name="applicationContextSchedulerContextKey">
+            <value>applicationContext</value>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,194 @@
+{template 'headergs'}
+{template 'common'}
+<script type="text/javascript" src="resource/js/lib/trimpath-template.js"></script>
+<script type="text/javascript" src="resource/js/repayment-request.js"></script>
+<script type="text/javascript" src="resource/js/lib/date.js"></script>
+<script type="text/javascript" src="resource/js/lib/pagination.js"></script>
+<link href="resource/css/skin.css" rel="stylesheet">
+<link href="resource/css/jquery-ui.css" rel="stylesheet">
+
+{if $operation == 'displayyjsh'}
+<style>
+    .nochoice {
+        float: left;
+        border: 1px solid #ddd;
+        padding: 4px 30px;
+    }
+
+    .nochoiceBack {
+        float: left;
+        border: 1px solid #ddd;
+        padding: 4px 30px;
+        background-color: gray;
+        color: #fff;
+    }
+
+    .selected-th {
+        background-color: #ee494d !important;
+    }
+
+    /*a.clear-a {*/
+    /*color: #ffffff;*/
+    /*text-decoration: none;*/
+    /*}*/
+
+    a.clear-a:hover {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    a.clear-a:focus {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .red-color {
+        color: #E63F00 !important;
+    }
+
+</style>
+<div class="col-md-10 col-lg-10">
+    <div class="main">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <ul class="nav nav-pills">
+                    <li class="">
+                        <a class="repayment-manage"
+                           href="./index.php?i=9&c=entry&do=c_goods_yj&m=eso_sale">佣金管理</a>
+                    </li>
+                    <li class="active">
+                        <a class="repayment-request"
+                           href="javascript:void(0);">
+                            {if $_SESSION['vip']==1}佣金审核{/if}
+                            {if $_SESSION['vip']==2}返佣申请查看{/if}
+                            {if $_SESSION['vip']==3}返佣申请查看{/if}
+                        </a>
+                    </li>
+                    <!--<li>-->
+                        <!--{if $_SESSION['vip']==1}-->
+                        <!--<a class="repayment-pay"-->
+                           <!--href="./index.php?i=9&c=entry&do=c_goods_yjzf&m=eso_sale">佣金支付</a>-->
+                        <!--{/if}-->
+                    <!--</li>-->
+                </ul>
+            </div>
+            <input type="hidden" value="{$_SESSION['vip']}" class="role"/>
+
+            <div class="panel-body">
+
+                <div class="form-group">
+                    {if $_SESSION['vip']==1}
+                    <div class="row">
+                        <label class="col-sm-2 col-md-2 col-lg-1 col-lg-offset-2  control-label">分公司</label>
+
+                        <div class="col-md-3 col-sm-3  col-lg-5">
+
+                            <select class="form-control subCorpSelect" style="margin-right:15px;" name="fgsname"
+                                    onchange="fetchChildCategory2(this.options[this.selectedIndex].value)">
+                                <option value="0">请选择分公司</option>
+                                {loop $fgs $fgs}
+                                {if $fgs['vip'] == 2}
+                                <option value="{$fgs['id']}" {if $fgs['id'] == $_GPC['fgsname']} selected="selected"{/if}>{$fgs['name']}</option>
+                                {/if}
+                                {/loop}
+                                <option value="1" {if $_GPC['fgsname']==1} selected="selected"{/if}>总公司</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" class="headCorpId" name="headCorpId" value="{$_SESSION['vipid']}"/>
+                    {/if}
+                    {if $sjxs}
+                    <div class="row" style="margin-top:10px;">
+                        <label class="col-sm-2 col-md-2 col-lg-1 col-lg-offset-2   control-label">经销商</label>
+
+                        <div class="col-xs-6 col-sm-4 col-lg-5">
+                            <select class="form-control input-medium retailerCorpSelect" id="jxsname" name="jxsname">
+                                <option value="0">请选择经销商</option>
+
+                                {if !empty($_GPC['fgsname']) && !empty($childrenjxs[$_GPC['fgsname']])}
+                                {loop $childrenjxs[$_GPC['fgsname']] $rowjxs}
+                                <option value="{$rowjxs[0]}" {if $rowjxs[0]== $_GPC['jxsname']} selected="selected"{/if}>{$rowjxs[1]}</option>
+                                {/loop}
+                                {/if}
+
+                            </select>
+                            <input type="hidden" class="subCorpId" name="subCorpId" value="{$_SESSION['vipid']}"/>
+                        </div>
+                    </div>
+                    {/if}
+                    <input type="hidden" class="retailerCorpId" name="vipid" value="{$_SESSION['vipid']}"/>
+                </div>
+
+
+                <div class="row" style="margin-top: 20px;margin-bottom: 30px;">
+                    <div class="col-lg-offset-2 col-md-offset-2 col-md-1 col-lg-1 ">
+                        <span style="float:right;" class="control-label">时间</span>
+                    </div>
+                    <div class="col-md-6 col-lg-6" id="times">
+                        <a href="javascript:void(0);">
+                            <div class="nochoice" time-span="7">7天内</div>
+                        </a>
+                        <a href="javascript:void(0);">
+                            <div class="nochoice" time-span="14">15天内</div>
+                        </a>
+                        <a href="javascript:void(0);">
+                            <div class="nochoice" time-span="30">30天内</div>
+                        </a>
+                        <a href="javascript:void(0);">
+                            <div class="nochoice nochoiceBack" time-span="all">全部</div>
+                        </a>
+                    </div>
+                    <div class=" col-xs-2 col-sm-2 col-lg-2">
+                        <button class="btn btn-default buttonBorder search"><i class="fa fa-search"></i>搜索</button>
+                    </div>
+                </div>
+
+                <input type="hidden" class="selected-plan-status" name="plan-status" value=""/>
+
+                <div class="row">
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="info">
+                            <th>申请日期</th>
+                            <th>申请编号</th>
+                            {if $_SESSION['vip']==1}
+                            <th>分公司佣金</th>
+                            <th>经销商佣金</th>
+                            {/if}
+                            {if $_SESSION['vip']==2}
+                            <th>返佣金额</th>
+                            {/if}
+                            {if $_SESSION['vip']==3}
+                            <th>返佣金额</th>
+                            {/if}
+                            <th>分公司</th>
+                            <th>经销商</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody class="show_repayment_applies">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination"></div>
+            </div>
+        </div>
+
+
+        <div id="pay-confirm" title="佣金支付" style="display: none;">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>请在打开的支付宝页面登陆并完成佣金的支付操作</p>
+        </div>
+
+        <div id="reject-repayment" title="佣金审核退回" style="display: none;">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>确定退回该返佣申请？</p>
+        </div>
+
+    </div>
+</div>
+{/if}
+</div>
+{template 'footer'}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.AgencyGoodRepository">
+    <select id="getGoodInfoByAgencyIdAndGoodId" parameterType="java.util.Map" resultType="com.spring.mvc.model.AgencyGoodModel">
+        select * from ims_eso_sale_goods_dls where mid=#{mid} and gid=#{gid};
+    </select>
+
+    <select id="getAgencyGoodById" parameterType="int" resultType="com.spring.mvc.model.AgencyGoodModel">
+        select * from ims_eso_sale_goods_dls where id=#{id};
+    </select>
+</mapper>

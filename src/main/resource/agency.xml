@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.AgencyRepository">
+    <select id="getByAgencyId" parameterType="int" resultType="com.spring.mvc.model.AgencyModel">
+        select * from ims_eso_sale_member where id=#{id}#;
+    </select>
+
+    <select id="getHeadCorpVipAgency" parameterType="java.util.Map" resultType="com.spring.mvc.model.AgencyModel">
+        select * from ims_eso_sale_member where vip=#{vip};
+    </select>
+</mapper>

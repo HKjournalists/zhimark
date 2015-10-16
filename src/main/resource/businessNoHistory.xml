@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.BusinessNoRepository">
+    <insert id="insertBusinessNo" parameterType="com.spring.mvc.model.BusinessNoHistoryModel">
+        insert into ims_eso_sale_business_no_history (businessNo,createTime,updateTime) VALUES (#{businessNo},#{createTime},#{updateTime});
+    </insert>
+
+    <select id="getByBusinessNo" parameterType="java.util.Map" resultType="com.spring.mvc.model.BusinessNoHistoryModel">
+        select * from ims_eso_sale_business_no_history where businessNo=#{businessNo};
+    </select>
+</mapper>

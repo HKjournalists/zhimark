@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.CompanyRepository">
+    <select id="getCompanyInfo" parameterType="int" resultType="com.spring.mvc.model.CompanyModel">
+        <!--目前只有一个公司，所以公司信息只获取一个且ID=1-->
+        <!--对应的表是ims_eso_sale_order_pz-->
+        select * from ims_eso_sale_order_pz where id=1;
+    </select>
+</mapper>

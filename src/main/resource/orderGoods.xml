@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.OrderGoodRepository">
+    <select id="getOrderGoodsByOrderId" parameterType="java.util.Map" resultType="com.spring.mvc.model.OrderGoodModel">
+        select * from ims_eso_sale_order_goods where orderid=#{orderId};
+    </select>
+
+    <select id="countAllOrderGoodsByOrderId" parameterType="java.util.Map" resultType="java.lang.Long">
+        select sum(total) from ims_eso_sale_order_goods where orderid=#{orderId};
+    </select>
+</mapper>

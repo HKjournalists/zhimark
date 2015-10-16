@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.SinoResultRecordRepository">
+    <insert id="insertNewRecord" parameterType="com.spring.mvc.model.SinoResultRecordModel">
+        insert into ims_eso_sale_sino_result_record (business_no,chk_mark,notice_time,notice_content,business_type,way_bills,create_time)
+        VALUES
+        (#{business_no},#{chk_mark},#{notice_time},#{notice_content},#{business_type},#{way_bills},#{create_time});
+    </insert>
+</mapper>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.AlipayPayInfoRequestRepository">
+    <insert id="insertAlipayPushRequest" parameterType="com.spring.mvc.model.serviceResult.alipay.AlipayPayInfoRequestModel">
+        insert into ims_eso_sale_alipay_customs_request (orderNo,alipayTradeNo,outRequestNo,amount,customsPlace,createTime,updateTime)
+        VALUES (#{orderNo},#{alipayTradeNo},#{outRequestNo},#{amount},#{customsPlace},#{createTime},#{updateTime});
+    </insert>
+</mapper>

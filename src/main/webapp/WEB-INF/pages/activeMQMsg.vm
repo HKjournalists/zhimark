@@ -1,0 +1,14 @@
+<html>
+<head>
+    <script src="/static/js/jquery-1.7.2.js" type="application/javascript"></script>
+    <script src="/static/js/lib/amq_jquery_adapter.js" type="application/javascript"></script>
+    <script src="/static/js/lib/amq.js" type="application/javascript"></script>
+    <script src="/static/js/receiveMessage.js" type="application/javascript"></script>
+</head>
+<body>
+
+<input type="button" class="send" value="发送消息" style="height: 50px;width: 60px;"/>
+
+<div class="show"></div>
+</body>
+</html>

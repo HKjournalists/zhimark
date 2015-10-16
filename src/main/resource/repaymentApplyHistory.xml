@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.RepaymentApplyHistoryRepository">
+    <insert id="insertRepaymentApplyHistory" parameterType="com.spring.mvc.model.RepaymentApplyHistoryModel"
+            useGeneratedKeys="true"
+            keyProperty="id">
+        insert into ims_eso_sale_repayment_apply_history (applyId,repaymentPlanId,createdDate,updatedDate) values
+        (#{applyId},#{repaymentPlanId},#{createdDate},#{updatedDate});
+    </insert>
+
+    <select id="getRepaymentApplyHistoryByApplyIdPagination" parameterType="java.util.Map"
+            resultType="com.spring.mvc.model.RepaymentApplyHistoryModel">
+        select * from ims_eso_sale_repayment_apply_history where applyId=#{applyId}
+        order by createdDate desc,repaymentPlanId desc
+        limit #{startIndex},#{offset};
+    </select>
+
+    <select id="countAllRepaymentApplyHistoryByApplyId" parameterType="java.util.Map" resultType="java.lang.Long">
+        select count(id) from ims_eso_sale_repayment_apply_history where applyId=#{applyId};
+    </select>
+</mapper>

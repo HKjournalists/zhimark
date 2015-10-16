@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mvc.repository.CountryRepository">
+    <select id="getCountryByName" parameterType="java.util.Map" resultType="com.spring.mvc.model.CountryModel">
+        select * from ims_eso_sale_country_code where name = #{name};
+    </select>
+
+    <select id="getCountryById" parameterType="int" resultType="com.spring.mvc.model.CountryModel">
+        select * from ims_eso_sale_country_code where id = #{id}#;
+    </select>
+</mapper>
